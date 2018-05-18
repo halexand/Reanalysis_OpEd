@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage{color,soul}
+\usepackage[colorlinks = True,
+            linkcolor = black,
+            urlcolor  = black,
+            citecolor = black,
+            anchorcolor = black]{hyperref}
+
+\usepackage[version=4]{mhchem}
+\usepackage{graphicx}
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{cleveref}
+\usepackage{outlines}
+\linespread{1.25}
+\usepackage[parfill]{parskip}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\geometry{letterpaper}
+
+\usepackage[numbers]{natbib}
+
+
+\title{Keeping it light: (Re)analyzing community-wide datasets without major infrastructure}
+\author{Harriet Alexander, Lisa K. Johnson, C. Titus Brown}
+
+\begin{document}
+  \maketitle
+
+
+\section{Background}
+Advances in high-throughput, next-generation sequencing technologies have catapulted biology into a new computational era. In fields of biology that leverage sequencing data, the primary limiting step in the first stage of biological inquiry has increasingly shifted away from data generation to data analysis. Concomitant with the increasing emphasis on the computational processing of these data is the advancement of the computational tools available for such analyses: new computational approaches for the analysis of these data are constantly being created, tested, and proved worthy of use. Yet, outside of computational lab groups, the practice of reanalysis of previously generated data is not commonplace. Such reanalysis has great utility and might become more routine within the life sciences, yet necessitates a new set of considerations for best practices and resource development.
+
+
+%The field, of biology, however lacks a set of agreed upon best practices for the reanalysis of biological data.
+% these new tools and improved software are published and gain recognition, new biological insights stand to be gained from the reanalysis of these archived data.
+
+Our interest in the issues surrounding reanalysis was spurred by a large-scale sequencing project: the Marine Microbial Transcriptome Sequencing Project (MMETSP), which generated 678 transcriptomes, spanning 396 different strains of eukaryotic microbial eukaryotes that were isolated from marine settings \cite{Caron2016}. This dataset has become an invaluable resource within the oceanographic community \cite{Keeling2014, Caron2016}, as it exponentially expanded the query-able genetic information base of marine protistan life. Moreover, the MMETSP has, potentially inadvertently, created a uniquely useful test dataset for computational biologists. The MMETSP dataset spans a large evolutionary history of organisms yet was unified in its generation, as each of the 678 transcriptomes were prepared and sequenced in a consistent \cite{Keeling2014}. The sequencing project, which was completed in 2014, was originally assembled by the National Center for Genome Resources using a custom pipeline that employed the best available computational tools at the time \cite{Simpson2009, Huang1999}.
+
+Since the original MMETSP analysis, new tools and techniques for the assembly of de novo transcriptomes from RNAseq data have been described and preexisting tools have been improved upon \cite{Grabherr2011}. The transcriptome assembly project described in Cohen et al. \cite{Cohen2017} was designed to create a pushbutton reassembly framework that not only enables the reanalysis of these data, but creating a framework to facilitate the easy and rapid reanalyses in the future. Ultimately, such iterations on the original raw data have the potential to improve upon the secondary data products, namely the assembled transcriptomes and associated annotations that are relied upon by the broader community for biological inquiry. We argue that the secondary data products of sequencing, such as assemblies, should be viewed as hypotheses surrounding the underlying biological organization, rather than some `truth', and, thus, these secondary data products might be improved as new tools are developed. Ultimately reanalysis enables the mining of free, existing data to generate data products that provide new, more holistic information than those created using tools available at the time of raw data generation. Such an advancement might help to iteratively improve upon the transcriptomes within the MMETSP reference database.
+
+Through this process, we fell upon several practices which might be broadly applicable and useful to those interested in the reanalysis of data. These practices make it feasible for individuals or multiple small lab groups to iteratively work upon existing data all while providing the broader community with secondary data products and the pipelines used to create them. % we also became aware of several lingering limitations or hurdles to such reanalysis efforts.
+
+% \subsection{Major questions}
+% \begin{enumerate}
+%   \item Where do you store the raw data?
+%   \item Where do you store reanalyzed data? How can you distinguish from the original analysis?
+%   \item How do you document provenance?
+%   \item Where can you run large, high memory compute operations?
+%   \item How to maximize utility to entire gradient of computational abilities?
+% \end{enumerate}
+\section{Main text}
+\subsection{Storage of secondary data products}
+Funding agencies and academic journals now mandate the deposition of raw data into digital repositories (e.g. NCBI Sequence Read Archive and Gene Expression Omnibus, European Nucleotide Archive). Thus, to date, the majority of the sequence data that has been generated and published are openly available online for reference and use in other studies. The sharing and availability of raw data from high-throughput sequencing studies has been largely managed through the development of archival services such as the Sequence Read Archive (SRA), which was established as part of the International Nucleotide Sequence Database Collaboration (INSDC)\cite{Kodama2012, Shumway2009}. The SRA currently contains more than 1.8e16 bases of information (\textasciitilde7e15 are open access)\footnote{As of 17 May 2018.}. While a tremendous resource for biological inquiry, a major problem remains in that raw sequencing data is not the most directly useful form of sequencing data. Rather, biologists typically rely heavily upon the cleaned and computationally manipulated secondary products of sequencing reads (e.g. assembled transcriptomes or genomes, annotations, associated count-based data, etc.). There is a dearth of these secondary products in central, publicly accessible databases, such as the  Transcriptome Shotgun Assembly (TSA) Sequence Database.
+%\footnote{All of the assemblies done by NCGR for MMETSP are absent from the TSA (unless I am not seeing them for some reason, potentially double check \href{https://www.ncbi.nlm.nih.gov/bioproject/248394}{here} and \href{https://www.ncbi.nlm.nih.gov/bioproject/231566}{here}). I would say that it appears that only two transcriptomes were uploaded to the TSA (probably because it is a bit of a PITA to get through their QC system). And thus, iMicrobe. I am not sure how the discussion of this should go but I do think that it proves our point quite nicely.}\footnote{The storage of microbial genomes might be an exception to this rule. NCBI's Microbial Genome Resources and JGI's IMG/M seem to be well adopted by their community.}\footnote{Perhaps a visual comparison of \# of datasets between the SRA and the TSA would be good?}
+In fact, a substantial proportion of these data products might be aptly categorized as `dark data,' as they are largely undiscoverable and often archived independently in association with a publication or on private servers. Even more limiting, however, is that the guidelines for public databases such as the TSA specifically state that ``Assemblies from sequences not directly sequenced by the submitter'' should not be uploaded to the TSA, thereby excluding the potential for reassembled datasets to be made available and directly linked to preexisting BioProjects, BioSamples, TSAs, and SRA entries.
+
+We argue that as a community we need more than a place to put the primary and secondary data products. Ideally, the results of each reanalysis would not only have a centralized location for the deposition of such secondary products, but a coherent archival procedure that is lab-independent, easily searchable, and ``forward discoverable'' (i.e. when a  new version of a data product is released old versions point to the new version). Moreover, such an archival platform would ideally simultaneously document the provenance of the secondary data product. Movement towards a data archival system are being made both with the development of alternative scientific data publication models (e.g. the Research Object\cite{Bechhofer2013}) as well as integration of metadata models (such as the Resource Description Framework) onto existing scientific databases like the European Bioinformatics Institute (EBI) \cite{Callahan2013}.
+
+\subsection{Directly linking secondary data products to provenance of work-flow}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=12cm]{Diagram.pdf}
+  \caption{Flow of coupled script and data product evolution.}
+  \label{FlowDiagram}
+\end{figure}
+
+In the absence of an appropriate, externally run database for the type of secondary product that were produced in this analysis, we opted to create a GitHub repository that contained the scripts used to generate the scripts used in the assemblies. Additionally, the GitHub repository contained links (DOIs) for the output data products (assembly, counts, annotations, etc.), which were uploaded to Zenodo (https://zenodo.org), a scientific data repository founded by CERN (\Cref{FlowDiagram}). The entirety of the repository was then archived with Zenodo, which generated a DOI. As such, the scripts used in the generation of transcriptomes are directly linked through a unique DOI to the data products that are listed in the directory. Using this method, the scripts can be easily tweaked to reanalyze the original data products using different parameters or tools, and then the new pipeline and output files can be re-archived with Zenodo. Moreover, the Zenodo archival system will then automatically indicate the presence of other versions of a given repository such that a user might be sure to use the newest version of an assembly. In future, such an approach might be further complemented by the integration of a JSON Linked Data file detailing the metadata for the assembly product, such as pipeline used and previous versions of the assemblies.
+
+\section{Conclusion}
+
+The Github-Zenodo framework presented here represents a relatively low cost, undemanding way for small research groups (i.e. a graduate student) to perform large-scale reanalysis projects in an efficient and publicly accessible way. The direct linking of protocols and metadata to output data products is paramount in the data heavy future of scientific advancement. Through this process, we identified several lingering issues surrounding the reanalysis and areas which require further development.
+
+Actual computation on these large datasets is a non-trivial issue, as it requires access to facilities with sufficiently large, high-memory machines. Amazon Web Service instances and other ``cloud'' platforms provide a potential arena for flexible computation, as they are broadly accessible across the globe and independent of institutions. Cloud-based systems, however, tend to be more expensive per computation hour than local resources. High Performance Computing (HPC) resources at local institutions represent another potential site of of compute ability. Yet, these can be temperamental and potentially will balk at larger, more node-consuming procedures. The reanalysis by Cohen et al. \cite{Cohen2017} attempted both but ultimately found that the HPC provided the best options for automation in spite of its occasionally persnickety behavior. Currently, as we see it, there is no global solution for identifying and optimizing the global scientific cyberinfrastructure requirements for such projects which require significant scaling; such considerations must be made on a project-by-project basis.
+
+Beyond the optimization of computational resources, the greatest opportunity for scientific advancement with high-throughput sequencing projects lies within our ability to make data products `forward discoverable.' In an ideal future, a researcher might be automatically notified when a dataset that she is actively working on is updated or changes. This presents many social and technical challenges that will need to be solved if we are to take full advantage of public data sets.
+
+% ne can imagine several ways that this might happen, such as Zenodo or Open Science Framework (OSF) adding utility to provide users the option of following a DOI chain that will automatically notify the user if any alterations or updates occur (e.g. a new DOI is provided for a repository). Another, less user-dependent method might involve the use of JSON-LD files to automatically track the occurrence of the original raw data DOI in the wild.
+%\footnote{Random musings that I don't think are directly germane to this topic: This issues surrounding discoverability really bringing us back to whether or not centralized or decentralized databases are of greater utility to the general public. Potentially hash-type approaches might better facilitate the automatic identification of new datasets (e.g. Sourmash). For example if you are working on a dataset you could automatically query all existing datasets to see if any sort of new data has been released on the issue. This is potentially made more difficult if we do not have a unified resource such as the SRA. The obvious benefit of a centralized repository is that it provides the user with a smaller and easily identifiable search set. But perhaps if we switch all data to the IPFS you could specify a file structure in which you would like to search and then search it. It is hard to say exactly how this would be implemented. And for that… we have Luiz.}
+
+
+
+\newpage
+\bibliographystyle{bmc_article}
+\bibliography{Oped_Reanalysis}
+\end{document}
