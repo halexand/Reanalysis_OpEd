@@ -1,1 +1,5 @@
-# Reanalysis_OpEd
+# Keeping it light: (Re)analyzing community-wide datasets without major infrastructure
+
+## Harriet Alexander, Lisa K. Johnson, C. Titus Brown
+
+Advances in high-throughput, next-generation sequencing technologies have catapulted biology into a new computational era. In fields of biology that leverage sequencing data, the primary limiting step in the first stage of biological inquiry has increasingly shifted away from data generation to data analysis. Concomitant with the increasing emphasis on the computational processing of these data is the advancement of the computational tools available for such analyses: new computational approaches for the analysis of these data are constantly being created, tested, and proved worthy of use. Yet, outside of computational lab groups, the practice of reanalysis of previously generated data is not commonplace. Such reanalysis has great utility and might become more routine within the life sciences, yet necessitates a new set of considerations for best practices and resource development.
